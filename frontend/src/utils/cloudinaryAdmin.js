@@ -3,7 +3,7 @@
 // The user requested direct client usage; ensure you understand the risk.
 
 export async function fetchFolderResources(folderPath, resourceType = 'image') {
-  const apiUrl = import.meta.env.VITE_API_URL || ''
+  const apiUrl = import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_API_URL || ''
   const url = `${apiUrl}/api/cloudinary/resources?folder=${encodeURIComponent(folderPath)}&resourceType=${encodeURIComponent(resourceType)}`
 
   try {

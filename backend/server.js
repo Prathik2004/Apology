@@ -21,6 +21,9 @@ if (!process.env.CLOUDINARY_CLOUD_NAME && !process.env.VITE_CLOUDINARY_CLOUD_NAM
 const app = express()
 const port = process.env.PORT || 5000
 
+const backendUrl = process.env.BACKEND_URL || process.env.VITE_BACKEND_URL
+const frontendUrl = process.env.FRONTEND_URL || process.env.VITE_FRONTEND_URL
+
 const cloudName = process.env.CLOUDINARY_CLOUD_NAME || process.env.VITE_CLOUDINARY_CLOUD_NAME
 const apiKey = process.env.CLOUDINARY_API_KEY || process.env.VITE_CLOUDINARY_API_KEY
 const apiSecret = process.env.CLOUDINARY_API_SECRET || process.env.VITE_CLOUDINARY_API_SECRET
@@ -29,7 +32,8 @@ if (!cloudName || !apiKey || !apiSecret) {
   console.warn('WARNING: Cloudinary credentials are not fully configured in backend/.env')
 }
 
-app.use(cors())
+const corsOptions = frontendUrl ? { origin: frontendUrl } : {}
+app.use(cors(corsOptions))
 app.use(express.json())
 
 app.get('/api/cloudinary/resources', async (req, res) => {
@@ -78,4 +82,6 @@ app.get('/', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Backend running on http://localhost:${port}`)
+  if (backendUrl) console.log(`Configured BACKEND_URL=${backendUrl}`)
+  if (frontendUrl) console.log(`Configured FRONTEND_URL=${frontendUrl}`)
 })

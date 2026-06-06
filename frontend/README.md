@@ -57,8 +57,12 @@ npm run build
 Create a `.env` file:
 
 ```
-VITE_API_URL=http://localhost:5000
+VITE_BACKEND_URL=http://localhost:5000
+VITE_FRONTEND_URL=http://localhost:3000
 ```
+
+If you deploy to Vercel/Render, update these values with your deployed URLs.
+
 To enable uploads using Cloudinary create these env variables in `.env`:
 
 ```bash
