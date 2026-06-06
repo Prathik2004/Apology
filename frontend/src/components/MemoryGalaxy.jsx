@@ -10,16 +10,26 @@ import { findCloudinaryResourceUrl } from '../utils/cloudinaryHelpers'
 const placeholderImage = '/photos/placeholder.svg'
 
 const MemoryPlanet = ({ position, image, onClick }) => {
-  const texture = useLoader(TextureLoader, image || placeholderImage)
+  const texture = useLoader(
+    TextureLoader,
+    image || placeholderImage,
+    loader => {
+      loader.setCrossOrigin('anonymous')
+      return loader
+    }
+  )
 
   return (
     <group position={position} onClick={onClick}>
       <mesh>
         <sphereGeometry args={[1.5, 32, 32]} />
-        <meshPhongMaterial
+        <meshStandardMaterial
           map={texture}
-          emissive={0xff69b4}
-          emissiveIntensity={0.3}
+          color="#ffffff"
+          roughness={0.8}
+          metalness={0.1}
+          emissive={0x222222}
+          emissiveIntensity={0.12}
         />
       </mesh>
       <pointLight intensity={2} color="#f472b6" distance={15} />
